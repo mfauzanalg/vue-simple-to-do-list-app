@@ -13,8 +13,6 @@
       v-bind:todo="todo"
       v-bind:index="index"
       v-bind:checkAll="!anyRemaining"
-      @removedTodo="removeTodo"
-      @finishedEdit="finishedEdit"
     ></todo-item>
 
     <div class="extra-container">
@@ -95,33 +93,22 @@ export default {
         return;
       }
 
-      this.$store.state.todos.push({
+      this.$store.commit("addTodo", {
         id: this.idForTodo,
-        title: this.newTodo,
-        completed: false
+        title: this.newTodo
       });
 
       this.newTodo = "";
       this.idForTodo++;
     },
-    removeTodo(index) {
-      this.$store.state.todos.splice(index, 1);
-    },
     checkAllTodos() {
-      this.$store.state.todos.forEach(
-        todo => (todo.completed = event.target.checked)
-      );
+      this.$store.commit("checkAll", event.target.checked);
     },
     clearCompleted() {
-      this.$store.state.todos = this.$store.state.todos.filter(
-        todo => !todo.completed
-      );
-    },
-    finishedEdit(data) {
-      this.$store.state.todos.splice(data.index, 1, data.todo);
+      this.$store.commit("clearCompleted");
     },
     changeFilter(filter) {
-      this.$store.state.filter = filter;
+      this.$store.commit("updateFilter", filter);
     }
   },
   props: {

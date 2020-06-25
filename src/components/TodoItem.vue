@@ -7,9 +7,7 @@
         @dblclick="editTodo"
         class="todo-item-label"
         :class="{ completed: completed }"
-      >
-        {{ title }}
-      </div>
+      >{{ title }}</div>
       <input
         v-else
         class="todo-item-edit"
@@ -21,9 +19,7 @@
         v-focus
       />
     </div>
-    <div class="remove-item" @click="removeTodo(index)">
-      &times;
-    </div>
+    <div class="remove-item" @click="removeTodo(id)">&times;</div>
   </div>
 </template>
 
@@ -33,16 +29,16 @@ export default {
   props: {
     todo: {
       type: Object,
-      required: true,
+      required: true
     },
     index: {
       type: Number,
-      required: true,
+      required: true
     },
     checkAll: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -50,7 +46,7 @@ export default {
       title: this.todo.title,
       completed: this.todo.completed,
       editing: this.todo.editing,
-      beforeEditChace: this.todo.beforeEditChace,
+      beforeEditChace: this.todo.beforeEditChace
     };
   },
   watch: {
@@ -60,11 +56,11 @@ export default {
       } else {
         this.completed = this.todo.completed;
       }
-    },
+    }
   },
   methods: {
-    removeTodo(index) {
-      this.$emit("removedTodo", index);
+    removeTodo(id) {
+      this.$store.commit("deleteTodo", id);
     },
     editTodo() {
       this.beforeEditCache = this.title;
@@ -75,27 +71,25 @@ export default {
         this.title = this.beforeEditCache;
       }
       this.editing = false;
-      this.$emit("finishedEdit", {
-        index: this.index,
-        todo: {
-          id: this.id,
-          title: this.title,
-          completed: this.completed,
-          editing: this.editing,
-        },
+
+      this.$store.commit("updateTodo", {
+        id: this.id,
+        title: this.title,
+        completed: this.completed,
+        editing: this.editing
       });
     },
     cancelEdit() {
       this.title = this.beforeEditCache;
       this.editing = false;
-    },
+    }
   },
   directives: {
     focus: {
       inserted: function(el) {
         el.focus();
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>
