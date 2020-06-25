@@ -15,26 +15,32 @@
       v-bind:checkAll="!anyRemaining"
       @removedTodo="removeTodo"
       @finishedEdit="finishedEdit"
-    >
-    </todo-item>
+    ></todo-item>
 
     <div class="extra-container">
       <div>
-        <label
-          ><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos" /> Check
-          All</label
-        >
+        <label>
+          <input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos" /> Check
+          All
+        </label>
       </div>
       <div>{{ remaining }} items left</div>
     </div>
 
     <div class="extra-container">
       <div>
-        <button :class="{ active: filter == 'all' }" @click="filter = 'all'">All</button>
-        <button :class="{ active: filter == 'active' }" @click="filter = 'active'">Active</button>
-        <button :class="{ active: filter == 'completed' }" @click="filter = 'completed'">
-          Completed
-        </button>
+        <button
+          :class="{ active: this.$store.state.filter == 'all' }"
+          @click="changeFilter('all')"
+        >All</button>
+        <button
+          :class="{ active: this.$store.state.filter == 'active' }"
+          @click="changeFilter('active')"
+        >Active</button>
+        <button
+          :class="{ active: this.$store.state.filter == 'completed' }"
+          @click="changeFilter('completed')"
+        >Completed</button>
       </div>
 
       <div>
@@ -52,37 +58,36 @@ import TodoItem from "./TodoItem";
 export default {
   name: "todo-list",
   components: {
-    TodoItem,
+    TodoItem
   },
   data() {
     return {
       newTodo: "",
-      filter: "all",
       idForTodo: 3,
-      beforeEditCache: "",
+      beforeEditCache: ""
     };
   },
   computed: {
     remaining() {
-      return this.$store.state.todos.filter((todo) => !todo.completed).length;
+      return this.$store.state.todos.filter(todo => !todo.completed).length;
     },
     anyRemaining() {
       return this.remaining != 0;
     },
     todosFiltered() {
-      if (this.filter == "all") {
+      if (this.$store.state.filter == "all") {
         return this.$store.state.todos;
-      } else if (this.filter == "active") {
-        return this.$store.state.todos.filter((todo) => !todo.completed);
-      } else if (this.filter == "completed") {
-        return this.$store.state.todos.filter((todo) => todo.completed);
+      } else if (this.$store.state.filter == "active") {
+        return this.$store.state.todos.filter(todo => !todo.completed);
+      } else if (this.$store.state.filter == "completed") {
+        return this.$store.state.todos.filter(todo => todo.completed);
       }
 
       return this.$store.state.todos;
     },
     showClearCompletedButton() {
-      return this.$store.state.todos.filter((todo) => todo.completed).length > 0;
-    },
+      return this.$store.state.todos.filter(todo => todo.completed).length > 0;
+    }
   },
   methods: {
     addTodo() {
@@ -93,7 +98,7 @@ export default {
       this.$store.state.todos.push({
         id: this.idForTodo,
         title: this.newTodo,
-        completed: false,
+        completed: false
       });
 
       this.newTodo = "";
@@ -103,18 +108,25 @@ export default {
       this.$store.state.todos.splice(index, 1);
     },
     checkAllTodos() {
-      this.$store.state.todos.forEach((todo) => (todo.completed = event.target.checked));
+      this.$store.state.todos.forEach(
+        todo => (todo.completed = event.target.checked)
+      );
     },
     clearCompleted() {
-      this.$store.state.todos = this.$store.state.todos.filter((todo) => !todo.completed);
+      this.$store.state.todos = this.$store.state.todos.filter(
+        todo => !todo.completed
+      );
     },
     finishedEdit(data) {
       this.$store.state.todos.splice(data.index, 1, data.todo);
     },
+    changeFilter(filter) {
+      this.$store.state.filter = filter;
+    }
   },
   props: {
-    msg: String,
-  },
+    msg: String
+  }
 };
 </script>
 
