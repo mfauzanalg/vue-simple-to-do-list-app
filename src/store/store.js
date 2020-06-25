@@ -75,4 +75,26 @@ export const store = new Vuex.Store({
       state.todos = state.todos.filter((todo) => !todo.completed);
     },
   },
+  actions: {
+    addTodo(context, todo) {
+      setTimeout(() => {
+        context.commit("addTodo", todo);
+      }, 1000);
+    },
+    updateTodo(context, todo) {
+      context.commit("updateTodo", todo);
+    },
+    deleteTodo(context, id) {
+      context.commit("deleteTodo", id);
+    },
+    checkAll(context, checked) {
+      context.commit("checkAll", checked);
+    },
+    updateFilter(context, filter) {
+      context.commit("updateFilter", filter);
+    },
+    clearCompleted(context) {
+      context.commit("clearCOmpleted");
+    },
+  },
 });
