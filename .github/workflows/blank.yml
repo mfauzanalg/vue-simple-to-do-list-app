@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ mfauzanalg-patch-1 ]
   pull_request:
     branches: [ master ]
 
