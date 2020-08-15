@@ -31,3 +31,15 @@ jobs:
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
+        
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: CD
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: echo masuk azure
+          host: ${{ secrets.HOST }}
+          username: azureuser
+          privateKey: ${{ secrets.PRIVATE_KEY}}
