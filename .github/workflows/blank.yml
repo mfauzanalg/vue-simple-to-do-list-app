@@ -41,5 +41,5 @@ jobs:
         with:
           command: echo masuk azure
           host: ${{ secrets.HOST }}
-          username: azureuser
+          user: azureuser
           privateKey: ${{ secrets.PRIVATE_KEY}}
