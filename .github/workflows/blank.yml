@@ -27,3 +27,4 @@ jobs:
           ls
           cd d-order-frontend
           ls
+          cd components
