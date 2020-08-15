@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: CD
-        uses: garygrossgarten/github-action-ssh@release
+        uses: fifsky/ssh-action@master
         with:
           command: echo masuk azure
           host: ${{ secrets.HOST }}
