@@ -39,7 +39,7 @@ jobs:
       - name: CD
         uses: fifsky/ssh-action@master
         with:
-          command: echo masuk azure
+          command: ls
           host: ${{ secrets.HOST }}
-          user: azureuser
-          key: ${{ secrets.PRIVATE_KEY}}
+          username: azureuser
+          privateKey: ${{ secrets.PRIVATE_KEY}}
